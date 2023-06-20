@@ -4,6 +4,7 @@ import protoRule
 from protoStruct import ProtoStruct
 from protoStruct import Field
 from protoRule import tokens
+import protoGen
 
 structNameSet = []
 structList = []
@@ -102,3 +103,6 @@ parser.parse(protoRule.sometext)
 
 print(structNameSet)
 print("structList:", structList)
+
+for st in structList:
+    protoGen.genProto(st)

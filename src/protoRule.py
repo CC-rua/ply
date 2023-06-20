@@ -6,7 +6,7 @@ from ply import lex
 
 reserved = {
     'RiProto': 'RIPROTO',
-    'Int': 'INT',
+    'int': 'INT',
     'bool': 'BOOL'
 }
 
@@ -60,7 +60,7 @@ def t_newline(t):
 sometext = '''RiProto protoDemo <10,999> {
 Int number;
 bool isBool;
-protoDeamo pd;
+protoDemo pd;
 }'''
 # 解析并读取
 lexer = lex.lex()
