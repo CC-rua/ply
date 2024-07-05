@@ -13,12 +13,17 @@ class ProtoStruct:
 
 
 class Field:
+    type = None
+    name = ''
+    is_array = False
+
     def __int__(self):
         self.type = None
         self.name = ''
+        self.is_array = False
 
     def __str__(self):
-        return f"[{self.type},{self.name}]"
+        return f"[{self.type},{self.name},{self.is_array}]"
 
     def __repr__(self):
-        return f"[{self.type},{self.name}]"
+        return f"[{self.type},{self.name},{self.is_array}]"

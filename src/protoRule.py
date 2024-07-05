@@ -7,7 +7,8 @@ from ply import lex
 reserved = {
     'RiProto': 'RIPROTO',
     'int': 'INT',
-    'bool': 'BOOL'
+    'bool': 'BOOL',
+    'Array': 'ARRAY'
 }
 
 literals = ['+', '-', '*', '/', ';', ',']
@@ -39,6 +40,12 @@ def t_ID(t):
     return t
 
 
+def t_ARRAY(t):
+    r'\[\]'
+    t.type = reserved.get(t.value, 'ARRAY')
+    return t
+
+
 def t_comment(t):
     r'\#.*'
     pass
@@ -57,10 +64,10 @@ def t_newline(t):
     pass
 
 
-sometext = '''RiProto protoDemo <10,999> {
-Int number;
+sometext = '''RiProto ProtoDemo <10,999> {
+int number;
 bool isBool;
-protoDemo pd;
+ProtoDemo[] pd;
 }'''
 # 解析并读取
 lexer = lex.lex()

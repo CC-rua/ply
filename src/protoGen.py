@@ -1,9 +1,8 @@
-from protoStruct import ProtoStruct
 
 CLASS_NAME = r'${CLASS_NAME}'
 FILED = r'${FILED}'
 PROTO_LENGTH = r'${PROTO_LENGTH}'
-JAVA_CLASS_TEMPLATE_FILE_PATH = '/home/cc/file/project/ply/src/JAVAClassTemplate.java'
+JAVA_CLASS_TEMPLATE_FILE_PATH = 'JAVAClassTemplate.java'
 JAVA_TYPE_BYTE_LENGTH_DIC = {
     'byte': 1,
     'short': 2,
@@ -13,6 +12,7 @@ JAVA_TYPE_BYTE_LENGTH_DIC = {
     'double': 8,
     'boolean': 1,
     'char': 2,
+    'bool': 1,
 }
 
 
@@ -20,7 +20,10 @@ def genFiled(ps):
     content = ''
     for filed in ps.fieldList:
         if filed is not None:
-            content += "\tpublic " + filed.type + " " + filed.name + ';\n'
+            if filed.is_array:
+                content += "\tpublic ArrayList<" + filed.type + "> " + filed.name + ';\n'
+            else:
+                content += "\tpublic " + filed.type + " " + filed.name + ';\n'
     return content
 
 
@@ -30,13 +33,16 @@ def genClassName(ps):
 
 def calProtoLen(ps):
     content = ''
-    primitiveLen = 0
+    primitiveLen = 00
     for filed in ps.fieldList:
         if filed is not None:
-            if JAVA_TYPE_BYTE_LENGTH_DIC[filed.type] is not None:
+
+            if JAVA_TYPE_BYTE_LENGTH_DIC.get(filed.type) is not None:
                 primitiveLen += JAVA_TYPE_BYTE_LENGTH_DIC[filed.type]
             else:
-                content += "sizeof("
+                content += filed.name + '.getLen()'
+
+    return primitiveLen.__str__() + '+' + content
 
 
 def genProto(ps):

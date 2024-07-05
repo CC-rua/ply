@@ -80,6 +80,18 @@ def p_innerStruct(p):
     p[0] = filed
 
 
+def p_arrayField(p):
+    """
+    field : type ARRAY ID ';'
+          | ID ARRAY ID ';'
+    """
+    filed = Field()
+    filed.type = p[1]
+    filed.name = p[3]
+    filed.is_array = True
+    p[0] = filed
+
+
 def p_fieldList(p):
     """
     fieldList : field
